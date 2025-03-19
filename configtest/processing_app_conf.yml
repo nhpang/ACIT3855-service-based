@@ -1,9 +1,0 @@
-datastore:
-  filename: /var/data.json
-scheduler:
-  interval: 5
-eventstores:
-  games:
-    url: http://storage:8090/nba/games
-  players:
-    url: http://storage:8090/nba/players

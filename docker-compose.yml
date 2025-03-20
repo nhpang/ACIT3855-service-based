@@ -39,7 +39,7 @@ services:
         target: /var/lib/mysql
     networks:
       - msnetwork
-    network_mode: "host" 
+    
 
   receiver:
     build:
@@ -51,7 +51,6 @@ services:
       - "kafka"
     ports:
       - 8091:8091
-    network_mode: "host" 
     volumes:
       - type: bind
         source: ./logs/
@@ -86,7 +85,6 @@ services:
       - msnetwork
     ports:
       - 8092:8092
-    network_mode: "host" 
     volumes:
       - type: bind
         source: ./logs/
@@ -109,7 +107,6 @@ services:
       - kafka
     ports:
       - 8093:8093
-    network_mode: "host" 
     volumes:
       - type: bind
         source: ./logs/

@@ -26,11 +26,11 @@ def populate_stats():
 
     # set up start and end timestamps
     logger.info(f"Periodic processing has started")
-    if not os.path.exists('../data/processing/stats.json'):
+    if not os.path.exists('/app/data/processing/stats.json'):
          start = "2024-02-12 20:10:14"
          end = "2026-02-12 20:10:14"
     else:
-        with open('../data/processing/stats.json', 'r') as file:
+        with open('/app/data/processing/stats.json', 'r') as file:
             data = json.load(file)
         last_updated = data.get("last_updated")
         end = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

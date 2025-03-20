@@ -32,13 +32,14 @@ def populate_stats():
     else:
         with open('/var/stats.json', 'r') as file:
             data = json.load(file)
-        last_updated = data.get("last_updated")
-        end = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if data != "":
+            last_updated = data.get("last_updated")
+            end = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # we need this bc if we take the timestamp from last stats, it will include last stats
-        last_updated = datetime.fromisoformat(last_updated.rstrip("Z"))
-        last_updated = last_updated + timedelta(seconds=1)
-        start = last_updated
+            # we need this bc if we take the timestamp from last stats, it will include last stats
+            last_updated = datetime.fromisoformat(last_updated.rstrip("Z"))
+            last_updated = last_updated + timedelta(seconds=1)
+            start = last_updated
 
     print(start)
     print(end)

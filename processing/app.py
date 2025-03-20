@@ -26,11 +26,11 @@ def populate_stats():
 
     # set up start and end timestamps
     logger.info(f"Periodic processing has started")
-    if not os.path.exists('/var/stats.json'):
+    if not os.path.exists('/app/data/stats.json'):
          start = "2024-02-12 20:10:14"
          end = "2026-02-12 20:10:14"
     else:
-        with open('/var/stats.json', 'r') as file:
+        with open('/app/data/stats.json', 'r') as file:
             data = json.load(file)
         if data != "":
             last_updated = data.get("last_updated")
@@ -78,14 +78,14 @@ def populate_stats():
         max_points = 0
         max_assists = 0
 
-        if not os.path.exists('/var/stats.json'):
+        if not os.path.exists('/app/data/stats.json'):
             num_game_events = 0
             num_player_events = 0
             max_points = 0
             max_assists = 0
             lupdated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         else:
-            with open('/var/stats.json', 'r') as file:
+            with open('/app/data/stats.json', 'r') as file:
                 data = json.load(file)
             num_game_events = data['num_game_events']
             num_player_events = data['num_player_events']
@@ -110,7 +110,7 @@ def populate_stats():
             "last_updated": lupdated
         }
     
-        with open('/var/stats.json', 'w') as file:
+        with open('/app/data/stats.json', 'w') as file:
             json.dump(STATISTICS, file, indent=4)
         
         logger.debug(f"Updated Statistics: {STATISTICS}")
@@ -118,8 +118,8 @@ def populate_stats():
 
 def get_stats():
     logger.info(f"Request Received")
-    if os.path.exists('/var/stats.json'):
-        with open('/var/stats.json', 'r') as file:
+    if os.path.exists('/app/data/stats.json'):
+        with open('/app/data/stats.json', 'r') as file:
             data = json.load(file)
         logger.debug(f"Contents: {data}")
         logger.info(f"Request completed")

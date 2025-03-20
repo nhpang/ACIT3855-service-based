@@ -105,8 +105,8 @@ services:
         source: ./config
         target: /app/config
       - type: bind
-        source: data/processing
-        target: /var/
+        source: ./data/processing
+        target: /app/data
 
   analyzer:
     build:

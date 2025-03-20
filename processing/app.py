@@ -31,7 +31,7 @@ def populate_stats():
          end = "2026-02-12 20:10:14"
     else:
         with open('/app/data/stats.json', 'r') as file:
-            if file:
+            if json.load(file):
                 data = json.load(file)
         last_updated = data.get("last_updated")
         end = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

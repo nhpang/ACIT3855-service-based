@@ -23,6 +23,12 @@ services:
       - "zookeeper"
     networks:
       - msnetwork
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics.sh --bootstrap-server localhost:9092 --list || exit 1"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
   mysql:
     image: mysql
@@ -39,6 +45,12 @@ services:
         target: /var/lib/mysql
     networks:
       - msnetwork
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
     
 
   receiver:

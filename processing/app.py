@@ -9,8 +9,20 @@ import httpx
 import json
 from datetime import datetime, timedelta
 
+from connexion.middleware import MiddlewarePosition
+from starlette.middleware.cors import CORSMiddleware
+
+
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("stats.yml", strict_validation=True, validate_responses=True)
+app.add_middleware(
+    CORSMiddleware,
+    position=MiddlewarePosition.BEFORE_EXCEPTION,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 with open('/app/config/processing_app_conf.yml', 'r') as f:
         app_config = yaml.safe_load(f.read())

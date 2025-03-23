@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nathan Pang NBA Stats page</title>
+</head>
+<body>
+    <h1>Processing</h1>
+
+    <!-- stats -->
+    <p id="processing"></p>
+    <script>
+        async function processing(){
+            try {
+              const response = await fetch('http://processing:8092/stats', {
+                  method: 'GET',
+              });
+
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              const processing = await response.json();
+              console.log(processing)
+
+          } catch (error) {
+              console.error('Error fetching search results:', error);
+          }
+        }   
+        processing()
+    </script>
+
+    <h1>Analyzer</h1>
+    
+    <!-- stats -->
+    <p id="analyzer"></p>
+    <script>
+        async function analyzer(){
+            try {
+              const response = await fetch('http://analyzer:8092/stats', {
+                  method: 'GET',
+              });
+
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              const analyzer = await response.json();
+              console.log(analyzer)
+
+          } catch (error) {
+              console.error('Error fetching search results:', error);
+          }
+        }   
+        analyzer()
+    </script>
+
+    <!-- random event -->
+    <p id="analyzerevent"></p>
+    <script>
+        async function analyzerevent(){
+            try {
+              const response = await fetch('http://analyzer:8093/NBAplayers?index=0', {
+                  method: 'GET',
+              });
+
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              const analyzerevent = await response.json();
+              console.log(analyzerevent)
+
+          } catch (error) {
+              console.error('Error fetching search results:', error);
+          }
+        }   
+        analyzerevent()
+    </script>
+
+    <img src="https://i.ebayimg.com/images/g/bLEAAOSwaeljDMb8/s-l1200.jpg" height="250px">
+    <!-- graphic -->
+
+    <h1> Last updated time</h1>
+
+    <!-- last updated time -->
+    <p id="timeupdate"></p>
+</body>
+</html>

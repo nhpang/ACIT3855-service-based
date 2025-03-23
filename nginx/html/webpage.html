@@ -11,7 +11,7 @@
     <script>
         async function processing(){
             try {
-              const response = await fetch('http://processing:8092/stats', {
+              const response = await fetch('http://localhost:8092/stats', {
                   method: 'GET',
               });
 
@@ -36,7 +36,7 @@
     <script>
         async function analyzer(){
             try {
-              const response = await fetch('http://analyzer:8092/stats', {
+              const response = await fetch('http://localhost:8092/stats', {
                   method: 'GET',
               });
 
@@ -59,7 +59,7 @@
     <script>
         async function analyzerevent(){
             try {
-              const response = await fetch('http://analyzer:8093/NBAplayers?index=0', {
+              const response = await fetch('http://localhost:8093/NBAplayers?index=0', {
                   method: 'GET',
               });
 

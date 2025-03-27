@@ -84,48 +84,49 @@ def populate_stats():
     logger.info(f"Received {len(games)} game events")
     logger.info(f"Received {len(players)} player events")
     #only create statistics if there is statistics
-    if len(players) > 0 or len(games) > 0:
-        # find max points and assists from player events
+    
+    # if len(players) > 0 or len(games) > 0:
+    # find max points and assists from player events
+    max_points = 0
+    max_assists = 0
+
+    if not os.path.exists('/app/data/stats.json'):
+        num_game_events = 0
+        num_player_events = 0
         max_points = 0
         max_assists = 0
+        lupdated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    else:
+        with open('/app/data/stats.json', 'r') as file:
+            data = json.load(file)
+        num_game_events = data['num_game_events']
+        num_player_events = data['num_player_events']
+        max_points = data['max_points']
+        max_assists = data['max_assists']
+        lupdated = players[-1]['date_created']
 
-        if not os.path.exists('/app/data/stats.json'):
-            num_game_events = 0
-            num_player_events = 0
-            max_points = 0
-            max_assists = 0
-            lupdated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        else:
-            with open('/app/data/stats.json', 'r') as file:
-                data = json.load(file)
-            num_game_events = data['num_game_events']
-            num_player_events = data['num_player_events']
-            max_points = data['max_points']
-            max_assists = data['max_assists']
-            lupdated = players[-1]['date_created']
+    for player in players:
+        points = int(player['points'])
+        assists = int(player['assists'])
 
-        for player in players:
-            points = int(player['points'])
-            assists = int(player['assists'])
+        if points > max_points:
+            max_points = points
+        if assists > max_assists:
+            max_assists = assists
 
-            if points > max_points:
-                max_points = points
-            if assists > max_assists:
-                max_assists = assists
+    STATISTICS = {
+        "num_game_events":num_game_events + len(games),
+        "num_player_events":num_player_events + len(players),
+        "max_points": max_points,
+        "max_assists": max_assists,
+        "last_updated": lupdated
+    }
 
-        STATISTICS = {
-            "num_game_events":num_game_events + len(games),
-            "num_player_events":num_player_events + len(players),
-            "max_points": max_points,
-            "max_assists": max_assists,
-            "last_updated": lupdated
-        }
+    with open('/app/data/stats.json', 'w') as file:
+        json.dump(STATISTICS, file, indent=4)
     
-        with open('/app/data/stats.json', 'w') as file:
-            json.dump(STATISTICS, file, indent=4)
-        
-        logger.debug(f"Updated Statistics: {STATISTICS}")
-        logger.info(f"Period processing has ended")
+    logger.debug(f"Updated Statistics: {STATISTICS}")
+    logger.info(f"Period processing has ended")
 
 def get_stats():
     logger.info(f"Request Received")

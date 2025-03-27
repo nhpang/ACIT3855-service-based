@@ -84,7 +84,7 @@ def populate_stats():
     logger.info(f"Received {len(games)} game events")
     logger.info(f"Received {len(players)} player events")
     #only create statistics if there is statistics
-    
+
     # if len(players) > 0 or len(games) > 0:
     # find max points and assists from player events
     max_points = 0
@@ -103,7 +103,7 @@ def populate_stats():
         num_player_events = data['num_player_events']
         max_points = data['max_points']
         max_assists = data['max_assists']
-        lupdated = players[-1]['date_created']
+        lupdated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     for player in players:
         points = int(player['points'])

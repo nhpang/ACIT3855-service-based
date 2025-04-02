@@ -122,6 +122,8 @@ def populate_stats():
         "last_updated": lupdated
     }
 
+    print(STATISTICS)
+
     with open('/app/data/stats.json', 'w') as file:
         json.dump(STATISTICS, file, indent=4)
     

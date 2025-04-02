@@ -119,6 +119,8 @@ services:
       - type: bind
         source: ./data/processing
         target: /app/data
+    depends_on:
+      - storage
 
   analyzer:
     build:

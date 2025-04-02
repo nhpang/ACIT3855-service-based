@@ -14,15 +14,16 @@ from starlette.middleware.cors import CORSMiddleware
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("stats.yml", strict_validation=True, validate_responses=True)
-app.add_middleware(
-    CORSMiddleware,
-    position=MiddlewarePosition.BEFORE_EXCEPTION,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.add_api("stats.yml", base_path="/processing", strict_validation=True, validate_responses=True)
+if "CORS_ALLOW_ALL" in os.environ and os.environ["CORS_ALLOW_ALL"] == "yes":
+    app.add_middleware(
+        CORSMiddleware,
+        position=MiddlewarePosition.BEFORE_EXCEPTION,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 with open('/app/config/processing_app_conf.yml', 'r') as f:
         app_config = yaml.safe_load(f.read())
@@ -56,7 +57,7 @@ def populate_stats():
     print(end)
 
     # send da get request
-    url = f"http://storage:8090/nba/games?start_timestamp={start}&end_timestamp={end}"
+    url = f"http://storage:8090/storage/nba/games?start_timestamp={start}&end_timestamp={end}"
     try:
         response = httpx.get(url)
         logger.info(f"Response for game event has status 200")
@@ -68,8 +69,7 @@ def populate_stats():
 
     games = response.json()
 
-
-    url = f"http://storage:8090/nba/players?start_timestamp={start}&end_timestamp={end}"
+    url = f"http://storage:8090/storage/nba/players?start_timestamp={start}&end_timestamp={end}"
     try:
         response = httpx.get(url)
         logger.info(f"Response for player event has status 200")

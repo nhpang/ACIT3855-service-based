@@ -244,7 +244,7 @@ logger = logging.getLogger('basicLogger')
 # ----------------------------------------------------------------------------------------------
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("basketball.yml",strict_validation=True,validate_responses=True)
+app.add_api("basketball.yml",base_path="/storage",strict_validation=True,validate_responses=True)
 
 def setup_kafka_thread():
     t1 = Thread(target=process_messages)

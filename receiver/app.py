@@ -36,7 +36,7 @@ from pykafka import KafkaClient
 #     return forward_to_storage("nba/players", body, 'PlayerReport') 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("basketball.yml", strict_validation=True, validate_responses=True)
+app.add_api("basketball.yml", base_path="/receiver", strict_validation=True, validate_responses=True)
 
 with open('/app/config/receiver_app_conf.yml', 'r') as f:
         app_config = yaml.safe_load(f.read())

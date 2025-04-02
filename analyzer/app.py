@@ -3,7 +3,7 @@ import logging.config
 import yaml
 from pykafka import KafkaClient
 import json
-
+import os
 
 from connexion.middleware import MiddlewarePosition
 from starlette.middleware.cors import CORSMiddleware
@@ -11,15 +11,16 @@ from starlette.middleware.cors import CORSMiddleware
 # ----------------------------------------------------------------
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("analyzer.yml", strict_validation=True, validate_responses=True)
-app.add_middleware(
-    CORSMiddleware,
-    position=MiddlewarePosition.BEFORE_EXCEPTION,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.add_api("analyzer.yml", base_path="/analyzer",strict_validation=True, validate_responses=True)
+if "CORS_ALLOW_ALL" in os.environ and os.environ["CORS_ALLOW_ALL"] == "yes":
+    app.add_middleware(
+        CORSMiddleware,
+        position=MiddlewarePosition.BEFORE_EXCEPTION,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 
 # ----------------------------------------------------------------

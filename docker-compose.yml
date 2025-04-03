@@ -77,8 +77,8 @@ services:
       - msnetwork
     depends_on:
       - "kafka"
-    ports:
-      - 8091:8091
+    # ports:
+    #   - 8091:8091
     volumes:
       - type: bind
         source: ./logs/
@@ -113,8 +113,8 @@ services:
       CORS_ALLOW_ALL: no # Change to yes if you want to allow all requests
     networks:
       - msnetwork
-    ports:
-      - 8092:8092
+    # ports:
+    #   - 8092:8092
     volumes:
       - type: bind
         source: ./logs/
@@ -139,8 +139,8 @@ services:
     depends_on:
       - "receiver"
       - kafka
-    ports:
-      - 8093:8093
+    # ports:
+    #   - 8093:8093
     volumes:
       - type: bind
         source: ./logs/
